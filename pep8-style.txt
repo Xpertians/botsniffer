@@ -1,0 +1,29 @@
+Python coders from non-English speaking countries: please write your comments in English, unless you are 120% sure that the code will never be read by people who don't speak your language.
+
+Code lay-out
+
+    Use 4 spaces per indentation level.
+    Continuation lines should align wrapped elements either vertically using Python's implicit line joining inside parentheses, brackets and braces, or using a hanging indent [7]. When using a hanging indent the following should be considered; there should be no arguments on the first line and further indentation should be used to clearly distinguish itself as a continuation line.
+    Yes:
+
+        # Aligned with opening delimiter.
+        foo = long_function_name(var_one, var_two,
+                                 var_three, var_four)
+
+        # Add 4 spaces (an extra level of indentation) to distinguish arguments from the rest.
+        def long_function_name(
+                var_one, var_two, var_three,
+                var_four):
+            print(var_one)
+
+    No:
+
+        # Arguments on first line forbidden when not using vertical alignment.
+        foo = long_function_name(var_one, var_two,
+            var_three, var_four)
+
+        # Further indentation required as indentation is not distinguishable.
+        def long_function_name(
+            var_one, var_two, var_three,
+            var_four):
+            print(var_one)

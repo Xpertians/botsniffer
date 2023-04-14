@@ -1,15 +1,13 @@
 import os
 import ast
 import argparse
-import tokenize
-from io import BytesIO
 from feature_extraction.feature_extraction import extract_features
 
 
 def get_functions(file_path):
     with open(file_path) as f:
         tree = ast.parse(f.read(), type_comments=True)
-        extract_features(tree)
+        extract_features(file_path, tree)
         functions = []
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
@@ -17,15 +15,6 @@ def get_functions(file_path):
                     "name": node.name,
                     "lineno": node.lineno
                 })
-
-        fileObj = open(file_path, 'r')
-        for toktype, tok, start, end, line in tokenize.generate_tokens(fileObj.readline):
-            # we can also use token.tok_name[toktype] instead of 'COMMENT'
-            # from the token module 
-            if toktype == tokenize.COMMENT:
-                print('COMMENT' + " " + tok)
-        
-
         return functions
 
 def scan_path(path):

@@ -1,24 +1,19 @@
-import ast
+import tokenize
+from io import BytesIO
 
-# test
-
-def analyze_comment_quality(parsed_code):
+def analyze_comment_quality(file_path, parsed_code):
     total_comments = 0
     high_quality_comments = 0
-
-    # Traverse the AST and count the number of comments
-    for node in ast.walk(parsed_code):
-        if isinstance(node, ast.Expr) and isinstance(node.value, ast.Str):
+    fObj = open(file_path, 'r')
+    for toktype, tok, start, end, line in tokenize.generate_tokens(fObj.readline):
+        if toktype == tokenize.COMMENT:
             total_comments += 1
-            if is_high_quality_comment(node.value.s):
+            if is_high_quality_comment(tok):
                 high_quality_comments += 1
-
-    # Calculate the quality of comments as a fraction of the total number of comments
     if total_comments > 0:
         quality = high_quality_comments / total_comments
     else:
         quality = 0.0
-
     return quality
 
 def is_high_quality_comment(comment):
@@ -29,6 +24,7 @@ def is_high_quality_comment(comment):
     for word in high_quality_words:
         print(comment)
         if word in comment.upper():
+            print(comment)
             return True
 
     return False

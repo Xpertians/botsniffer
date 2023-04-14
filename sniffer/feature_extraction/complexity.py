@@ -1,9 +1,9 @@
 import ast
 
 def calculate_code_complexity(parsed_code):
-    # Calculates the cyclomatic complexity of the parsed code.
-    # Needs to be replaced for a full implementation based on
-    # bucle, types, methods, etc.
+    # Traverse the AST and count the number of edges and nodes in the control flow graph
+    # This needs to be moved to a better implementation
+    # consider this as a ugly hack, aklos I'm out of beer
     # Initialize the complexity count
     complexity_count = 1
 

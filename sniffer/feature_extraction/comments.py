@@ -22,9 +22,7 @@ def is_high_quality_comment(comment):
 
     # Check if the comment contains any high-quality words or phrases
     for word in high_quality_words:
-        print(comment)
         if word in comment.upper():
-            print(comment)
             return True
 
     return False

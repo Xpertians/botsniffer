@@ -1,6 +1,6 @@
 import ast
 
-def calculate_code_complexitys(parsed_code):
+def calculate_code_complexityssss(parsed_code):
     # Traverse the AST and count the number of edges and nodes in the control flow graph
     # This needs to be moved to a better implementation
     # consider this as a ugly hack, aklos I'm out of beer
@@ -19,9 +19,10 @@ def calculate_code_complexitys(parsed_code):
 def calculate_code_complexity(parsed_code):
     num_edges = 0
     num_nodes = 0
-
+    print('calculate_code_complexity')
     # Traverse the AST and count the number of edges and nodes in the control flow graph
     for node in ast.walk(parsed_code):
+        print('anoter-node')
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             # Calculate complexity for functions and async functions separately
             num_edges += calculate_function_complexity(node)
@@ -54,6 +55,8 @@ def calculate_code_complexity(parsed_code):
             num_edges += 1
         elif isinstance(node, ast.Return):
             num_edges += 1
+    print('num_edges:', num_edges)
+    print('num_nodes:', num_nodes)
 
     # Calculate the McCabe complexity metric
     if num_nodes == 0:

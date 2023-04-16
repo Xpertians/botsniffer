@@ -4,19 +4,6 @@ import argparse
 from feature_extraction.feature_extraction import extract_features
 
 
-def get_functions(file_path):
-    with open(file_path) as f:
-        tree = ast.parse(f.read(), type_comments=True)
-        extract_features(file_path, tree)
-        functions = []
-        for node in ast.walk(tree):
-            if isinstance(node, ast.FunctionDef):
-                functions.append({
-                    "name": node.name,
-                    "lineno": node.lineno
-                })
-        return functions
-
 def scan_path(path):
     if not os.path.exists(path):
         print("Error: '{}' does not exist.".format(path))
@@ -25,11 +12,9 @@ def scan_path(path):
             for file_name in files:
                 if file_name.endswith(".py"):
                     file_path = os.path.join(root, file_name)
-                    functions = get_functions(file_path)
-                    print("File: {}".format(file_path))
-                    for function in functions:
-                        print("- Function '{}' defined at line {}".format(
-                            function["name"], function["lineno"]))
+                    with open(file_path) as f:
+                        tree = ast.parse(f.read(), type_comments=True)
+                        extract_features(file_path, tree)
     else:
         if path.endswith(".py"):
             functions = get_functions(path)

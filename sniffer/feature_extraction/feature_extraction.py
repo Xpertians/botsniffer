@@ -10,6 +10,7 @@ def extract_features(file_path, parsed_code):
     features = {}
 
     # Extract comment features
+    features["file_path"] = file_path
     features["comment_quality"] = analyze_comment_quality(file_path, parsed_code)
     features["code_identation"] = calculate_indentation_consistency(file_path, parsed_code)
     features["style_adherence"] = calculate_style_guide_adherence(file_path, parsed_code)

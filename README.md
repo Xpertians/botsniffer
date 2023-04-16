@@ -16,3 +16,9 @@ Some ideas and inspirations where taken from:
 * https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 * https://towardsdatascience.com/a-practical-guide-to-implementing-a-random-forest-classifier-in-python-979988d8a263
 * https://www.datacamp.com/tutorial/random-forests-classifier-python
+
+''' DecisionTreeClassifier: '''
+
+* https://www.datacamp.com/tutorial/decision-tree-classification-python
+* https://dataaspirant.com/decision-tree-algorithm-python-with-scikit-learn/
+* https://datagy.io/sklearn-decision-tree-classifier/

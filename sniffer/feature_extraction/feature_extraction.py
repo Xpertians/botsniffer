@@ -17,5 +17,13 @@ def extract_features(file_path, parsed_code):
     features["code_complexity"] = detect_repetitive_patterns(file_path, parsed_code)
     
     print(features)
+    
+    if features["code_complexity"] > 0:
+        print("HERE!")
+        exit()
+    if features["repetitive_patterns"] > 0:
+        print("HERE!")
+        exit()
+    exit()
 
     return features

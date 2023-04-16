@@ -12,7 +12,10 @@ def calculate_indentation_consistency(file_path, parsed_code):
     # Calculate the standard deviation of the indentation levels
     if len(indent_levels) > 1:
         std_dev = sum((x - sum(indent_levels) / len(indent_levels)) ** 2 for x in indent_levels) / len(indent_levels)
-        indent_consistency = 1 - std_dev / max(indent_levels)
+        if max(indent_levels) <= 0:
+            indent_consistency = 1.0
+        else:
+            indent_consistency = 1 - std_dev / max(indent_levels)
     else:
         indent_consistency = 1.0
 

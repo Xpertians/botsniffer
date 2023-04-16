@@ -1,7 +1,7 @@
 import os
 import ast
 import argparse
-from feature_extraction.feature_extraction import extract_features
+from botsniffer.feature_extraction.feature_extraction import extract_features
 
 
 def scan_path(path):
@@ -23,9 +23,12 @@ def scan_path(path):
         else:
             print("Error: '{}' is not a Python source code file.".format(path))
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="Scan Python source code files and extract information about functions.")
     parser.add_argument("path", help="The path to scan.")
     args = parser.parse_args()
 
     scan_path(args.path)
+
+if __name__ == "__main__":
+    main()

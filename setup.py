@@ -6,7 +6,7 @@ setup(
     description="botsniffer - Detects AI generated source code using feature extraction with Machine Learning",
     author="Oscar Valenzuela",
     author_email="oscar.valenzuela.b@gmail.com",
-    packages=['botsniffer', 'botsniffer.data'],
+    packages=['botsniffer', 'botsniffer.data', 'botsniffer.feature_extraction'],
     entry_points={"console_scripts": ["botsniffer=botsniffer.scanner:main"]},
     install_requires=["ast-comments"],
     url='https://opensourcelicensecompliance.com',

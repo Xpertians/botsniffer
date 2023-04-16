@@ -1,7 +1,7 @@
 import ast
 import math
 
-def calculate_indentation_consistency(file_path, parsed_code):
+def calculate_indentation_consistency(parsed_code):
     # Calculates the indentation consistency of the parsed code.
     indentation_levels = []
 

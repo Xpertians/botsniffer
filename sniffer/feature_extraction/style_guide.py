@@ -1,6 +1,6 @@
 import ast
 
-def calculate_style_guide_adherence(file_path, parsed_code):
+def calculate_style_guide_adherence(parsed_code):
     # Calculates the adherence to a style guide of the parsed code.
     # Very dummy style_guide. Needs to be replaced by PEP8 Style
     style_guide = {

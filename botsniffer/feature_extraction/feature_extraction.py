@@ -15,7 +15,7 @@ def extract_features(file_path, parsed_code):
     features["style_adherence"] = calculate_style_guide_adherence(parsed_code)
     features["repetitive_patterns"] = detect_repetitive_patterns(parsed_code)
     features["code_complexity"] = calculate_code_complexity(parsed_code)
-
-    print(features)
+    
+    # print('file_path:', file_path)
 
     return features

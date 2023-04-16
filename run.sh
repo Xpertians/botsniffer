@@ -5,4 +5,5 @@ pycodestyle --exclude='*testfiles*' . | grep -v 'build' | grep -v 'dist' | grep 
 python3 setup.py sdist bdist_wheel > install-pip.log
 pip3 uninstall botsniffer  -y >> install-pip.log
 pip3 install dist/botsniffer*.whl >> install-pip.log
-botsniffer ./
+botsniffer ./ --train
+botsniffer ./botsniffer/scanner.py --identify

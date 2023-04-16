@@ -17,11 +17,9 @@ def scan_path(path):
                         extract_features(file_path, tree)
     else:
         if path.endswith(".py"):
-            functions = get_functions(path)
-            print("File: {}".format(path))
-            for function in functions:
-                print("- Function '{}' defined at line {}".format(
-                    function["name"], function["lineno"]))
+            with open(path) as f:
+                tree = ast.parse(f.read(), type_comments=True)
+                extract_features(path, tree)
         else:
             print("Error: '{}' is not a Python source code file.".format(path))
 

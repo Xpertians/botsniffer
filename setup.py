@@ -3,10 +3,15 @@ from setuptools import setup, find_packages
 
 setup(
     name="botsniffer", version="0.1",
-    description="botsniffer - Detects AI generated source code using feature extraction with Machine Learning",
+    description="botsniffer - Detects AI generated \
+    source code using feature extraction with Machine Learning",
     author="Oscar Valenzuela",
     author_email="oscar.valenzuela.b@gmail.com",
-    packages=['botsniffer', 'botsniffer.data', 'botsniffer.feature_extraction', 'botsniffer.ml_model'],
+    packages=[
+        'botsniffer',
+        'botsniffer.data',
+        'botsniffer.feature_extraction',
+        'botsniffer.ml_model'],
     entry_points={"console_scripts": ["botsniffer=botsniffer.scanner:main"]},
     install_requires=["sklearn", "numpy", "pandas"],
     url='https://opensourcelicensecompliance.com',

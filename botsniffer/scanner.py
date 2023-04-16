@@ -4,8 +4,7 @@ import pickle
 import argparse
 
 from botsniffer.feature_extraction.feature_extraction import extract_features
-from botsniffer.ml_model.model import train_model
-
+from botsniffer.ml_model.model import train_model, predict
 
 
 def get_features(file_path, tree):
@@ -13,12 +12,14 @@ def get_features(file_path, tree):
     feature_values = []
     for key, value in features.items():
         if isinstance(value, str):
-            feature_values.append(value)
+            feature_values.append(float(value))
         elif isinstance(value, list):
             feature_values.extend(value)
         else:
-            feature_values.append(str(value))
-    sample = ' '.join(feature_values)
+            feature_values.append(float(value))
+    sample = feature_values
+    # For training, is expected that AI generated
+    # files had "ai" in their name/path
     if "ai" in file_path.lower():
         label = True
     else:
@@ -27,6 +28,7 @@ def get_features(file_path, tree):
 
 
 def scan_path(path, identify, train):
+    is_ai = False
     samples = []
     labels = []
     pkl_path = "botsniffer/data/botcode.pkl"
@@ -41,9 +43,9 @@ def scan_path(path, identify, train):
                     with open(file_path) as f:
                         tree = ast.parse(f.read(), type_comments=True)
                         features, sample, label = get_features(file_path, tree)
-                        #print(sample, label)
                         if identify:
                             print(features)
+                            is_ai = predict(pkl_path, features)
                         elif train:
                             samples.append(sample)
                             if label:
@@ -51,15 +53,17 @@ def scan_path(path, identify, train):
                             else:
                                 labels.append(0)
                         else:
-                            print("Error: you must specify either --identify or --train.")
+                            print("Error: you must specify \
+                            either --identify or --train.")
     else:
         if path.endswith(".py"):
-            # Run the feature extraction in a file
+            # Run the feature extraction in a single file
             with open(path) as f:
                 tree = ast.parse(f.read(), type_comments=True)
                 features, sample, label = get_features(path, tree)
                 if identify:
                     print(features)
+                    is_ai = predict(pkl_path, features)
                 elif train:
                     samples.append(sample)
                     if label:
@@ -67,25 +71,36 @@ def scan_path(path, identify, train):
                     else:
                         labels.append(0)
                 else:
-                    print("Error: you must specify either --identify or --train.")
+                    print("Error: you must specify either \
+                    --identify or --train.")
         else:
             print("Error: '{}' is not a Python source code file.".format(path))
     if train:
         train_model(pkl_path, labels, samples)
-        print('Train!')
-
-
-def prepare_training(features, filename):
-    if "ai" in file.lower():
-        labels.append(1)
+        print('Trained:')
+        print(' - labels:', len(labels))
+        print(' - samples:', len(samples))
+    elif identify:
+        print('File:', path)
+        print('AI:', is_ai)
     else:
-        labels.append(0)
+        print("Error: you must specify either \
+        --identify or --train.")
+
 
 def main():
-    parser = argparse.ArgumentParser(description="Scan Python source code files and extract information about functions.")
+    parser = argparse.ArgumentParser(
+        description="Scan Python source code files \
+        and extract information about functions.")
     parser.add_argument("path", help="The path to scan.")
-    parser.add_argument("--identify", action="store_true", help="Identify AI-generated code.")
-    parser.add_argument("--train", action="store_true", help="Train a model to identify AI-generated code.")
+    parser.add_argument(
+        "--identify",
+        action="store_true",
+        help="Identify AI-generated code.")
+    parser.add_argument(
+        "--train",
+        action="store_true",
+        help="Train a model to identify AI-generated code.")
     args = parser.parse_args()
 
     scan_path(args.path, args.identify, args.train)
@@ -93,4 +108,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

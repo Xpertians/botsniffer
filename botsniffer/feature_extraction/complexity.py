@@ -44,8 +44,8 @@ def calculate_code_complexity(parsed_code):
         return 1.0
     else:
         return num_edges - num_nodes + 2
-        
-        
+
+
 def calculate_nested_complexity(node, depth=0, max_depth=10):
     num_edges = 0
     if depth == max_depth:
@@ -54,22 +54,28 @@ def calculate_nested_complexity(node, depth=0, max_depth=10):
     for subnode in ast.iter_child_nodes(node):
         if isinstance(subnode, (ast.FunctionDef, ast.AsyncFunctionDef)):
             # Increase the depth only for nested functions
-            num_edges += calculate_nested_complexity(subnode, depth=depth, max_depth=max_depth)
+            num_edges += calculate_nested_complexity(
+                                subnode, depth=depth, max_depth=max_depth)
         elif isinstance(subnode, ast.If):
             num_edges += 2
-            num_edges += calculate_nested_complexity(subnode, depth=depth+1, max_depth=max_depth)
+            num_edges += calculate_nested_complexity(
+                                subnode, depth=depth+1, max_depth=max_depth)
         elif isinstance(subnode, ast.While):
             num_edges += 2
-            num_edges += calculate_nested_complexity(subnode, depth=depth+1, max_depth=max_depth)
+            num_edges += calculate_nested_complexity(
+                                subnode, depth=depth+1, max_depth=max_depth)
         elif isinstance(subnode, ast.For):
             num_edges += 2
-            num_edges += calculate_nested_complexity(subnode, depth=depth+1, max_depth=max_depth)
+            num_edges += calculate_nested_complexity(
+                                subnode, depth=depth+1, max_depth=max_depth)
         elif isinstance(subnode, ast.With):
             num_edges += 2
-            num_edges += calculate_nested_complexity(subnode, depth=depth+1, max_depth=max_depth)
+            num_edges += calculate_nested_complexity(
+                                subnode, depth=depth+1, max_depth=max_depth)
         elif isinstance(subnode, ast.Try):
             num_edges += 3
-            num_edges += calculate_nested_complexity(subnode, depth=depth+1, max_depth=max_depth)
+            num_edges += calculate_nested_complexity(
+                                subnode, depth=depth+1, max_depth=max_depth)
         elif isinstance(subnode, ast.ExceptHandler):
             num_edges += 1
         elif isinstance(subnode, ast.AugAssign):

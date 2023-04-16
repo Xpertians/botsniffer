@@ -1,31 +1,15 @@
 import ast
 
-def calculate_code_complexityssss(parsed_code):
-    # Traverse the AST and count the number of edges and nodes in the control flow graph
-    # This needs to be moved to a better implementation
-    # consider this as a ugly hack, aklos I'm out of beer
-    # Initialize the complexity count
-    complexity_count = 1
-
-    # Traverse the AST and count the number of control flow statements
-    for node in ast.walk(parsed_code):
-        if isinstance(node, (ast.If, ast.While, ast.For, ast.With, ast.Try)):
-            complexity_count += 1
-        elif isinstance(node, ast.FunctionDef):
-            complexity_count += calculate_code_complexity(node)
-
-    return complexity_count
 
 def calculate_code_complexity(parsed_code):
+    # Calculte the McCabe complexity metric from the parsed code.
+    # This code is a hack, needs a lot of improvement, like for exmple
+    # the nested dupliczated function
     num_edges = 0
     num_nodes = 0
-    print('calculate_code_complexity')
-    # Traverse the AST and count the number of edges and nodes in the control flow graph
     for node in ast.walk(parsed_code):
-        print('anoter-node')
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            # Calculate complexity for functions and async functions separately
-            num_edges += calculate_function_complexity(node)
+            num_edges += calculate_nested_complexity(node)
         elif isinstance(node, ast.If):
             num_edges += 2
             num_nodes += 1
@@ -55,11 +39,50 @@ def calculate_code_complexity(parsed_code):
             num_edges += 1
         elif isinstance(node, ast.Return):
             num_edges += 1
-    print('num_edges:', num_edges)
-    print('num_nodes:', num_nodes)
-
-    # Calculate the McCabe complexity metric
     if num_nodes == 0:
+        # McCabe complexity metric returns 1.0 as default
         return 1.0
     else:
         return num_edges - num_nodes + 2
+        
+        
+def calculate_nested_complexity(node, depth=0, max_depth=10):
+    num_edges = 0
+    if depth == max_depth:
+        return num_edges
+
+    for subnode in ast.iter_child_nodes(node):
+        if isinstance(subnode, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            # Increase the depth only for nested functions
+            num_edges += calculate_nested_complexity(subnode, depth=depth, max_depth=max_depth)
+        elif isinstance(subnode, ast.If):
+            num_edges += 2
+            num_edges += calculate_nested_complexity(subnode, depth=depth+1, max_depth=max_depth)
+        elif isinstance(subnode, ast.While):
+            num_edges += 2
+            num_edges += calculate_nested_complexity(subnode, depth=depth+1, max_depth=max_depth)
+        elif isinstance(subnode, ast.For):
+            num_edges += 2
+            num_edges += calculate_nested_complexity(subnode, depth=depth+1, max_depth=max_depth)
+        elif isinstance(subnode, ast.With):
+            num_edges += 2
+            num_edges += calculate_nested_complexity(subnode, depth=depth+1, max_depth=max_depth)
+        elif isinstance(subnode, ast.Try):
+            num_edges += 3
+            num_edges += calculate_nested_complexity(subnode, depth=depth+1, max_depth=max_depth)
+        elif isinstance(subnode, ast.ExceptHandler):
+            num_edges += 1
+        elif isinstance(subnode, ast.AugAssign):
+            num_edges += 1
+        elif isinstance(subnode, ast.BoolOp):
+            num_edges += len(subnode.values) - 1
+        elif isinstance(subnode, ast.BinOp):
+            num_edges += 1
+        elif isinstance(subnode, ast.Compare):
+            num_edges += len(subnode.ops)
+        elif isinstance(subnode, ast.Call):
+            num_edges += 1
+        elif isinstance(subnode, ast.Return):
+            num_edges += 1
+
+    return num_edges

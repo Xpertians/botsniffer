@@ -8,7 +8,7 @@ setup(
     author_email="oscar.valenzuela.b@gmail.com",
     packages=['botsniffer', 'botsniffer.data', 'botsniffer.feature_extraction', 'botsniffer.ml_model'],
     entry_points={"console_scripts": ["botsniffer=botsniffer.scanner:main"]},
-    install_requires=["sklearn", "numpy"],
+    install_requires=["sklearn", "numpy", "pandas"],
     url='https://opensourcelicensecompliance.com',
     package_data={
         "botsniffer.data": ["*.txt", "*.ini", "*.sig"],

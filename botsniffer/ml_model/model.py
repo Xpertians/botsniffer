@@ -1,27 +1,32 @@
-import joblib
-import numpy as np
-from sklearn.ensemble import RandomForestClassifier
+import pickle
+from sklearn.tree import DecisionTreeClassifier
 
-def train_model(X, y):
-    # Initialize the machine learning model
-    model = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
+def train_model(pkl_path, labels, samples):
+    print(samples)
+    # Train a decision tree classifier on the dataset
+    clf = DecisionTreeClassifier()
+    clf.fit(samples, labels)
 
-    # Train the model on the input data
-    model.fit(X, y)
+    # Save the trained model to a file
+    with open(pkl_path, "wb") as f:
+        pickle.dump(clf, f)
 
-    # Save the trained model to disk
-    joblib.dump(model, "model.joblib")
+def load(pkl_path):
+    # Load the trained model from the pickle file
+    with open(pkl_path, "rb") as f:
+        clf = pickle.load(f)
 
-def load_model():
-    # Load the trained model from disk
-    model = joblib.load("model.joblib")
-    return model
+    return clf
 
-def predict(X):
-    # Load the trained model from disk
-    model = load_model()
+def predict(pkl_path, features):
+    # Load the model
+    model = load(pkl_path)
 
-    # Make a prediction on the input data
-    prediction = model.predict(X)
+    # Convert the features into a feature vector
+    feature_vector = [[features['comment_quality'], features['code_identation'], features['style_adherence'], features['repetitive_patterns'], features['code_complexity']]]
 
-    return prediction[0]
+    # Use the trained model to make a prediction
+    prediction = model.predict(feature_vector)
+
+    # Return the prediction
+    return bool(prediction[0])

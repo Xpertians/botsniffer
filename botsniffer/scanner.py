@@ -47,10 +47,10 @@ def scan_path(path, identify, train):
                         tree = ast.parse(f.read(), type_comments=True)
                         features, sample, label = get_features(file_path, tree)
                         if identify:
-                            print(features)
                             is_ai = predict(pkl_path, features)
-                            print('File:', path)
+                            print('File:', file_path)
                             print('AI:', is_ai)
+                            print('Features:', features)
                         elif train:
                             samples.append(sample)
                             if label:
@@ -67,10 +67,10 @@ def scan_path(path, identify, train):
                 tree = ast.parse(f.read(), type_comments=True)
                 features, sample, label = get_features(path, tree)
                 if identify:
-                    print(features)
                     is_ai = predict(pkl_path, features)
                     print('File:', path)
                     print('AI:', is_ai)
+                    print('Features:', features)
                 elif train:
                     samples.append(sample)
                     if label:

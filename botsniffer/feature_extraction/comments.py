@@ -21,19 +21,18 @@ def analyze_comment_quality(file_path, parsed_code):
             total_comments += 1
             if is_high_quality_comment(tok):
                 high_quality_comments += 1
-    if total_comments > 0:
-        # Used total commented lines vs total lines, but
-        # it can also use keywords
+    if high_quality_comments > 0:
+        quality = (high_quality_comments / total_comments) + 1
+    elif total_comments > 0:
         quality = total_comments / total_lines
-        # quality = high_quality_comments / total_comments
     else:
         quality = 0.0
     return quality
 
 
 def is_high_quality_comment(comment):
-    # DEFINE a set of words and phrases that indicate a high-quality comment
-    high_quality_words = {"TODO", "FIXME", "NOTE", "HACK", "XXX", "DEFINE"}
+    # Set of words and phrases that indicate a high-quality comment
+    high_quality_words = {"TODO", "FIXME", "NOTE", "HACK", "FIX", "DEFINE"}
     # Check if the comment contains any high-quality words or phrases
     for word in high_quality_words:
         if word in comment.upper():

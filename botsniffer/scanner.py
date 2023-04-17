@@ -31,7 +31,10 @@ def scan_path(path, identify, train):
     is_ai = False
     samples = []
     labels = []
-    pkl_path = "botsniffer/data/botcode.pkl"
+    pkl_dir = os.path.join(os.path.dirname(__file__), 'data')
+    pkl_path = os.path.join(
+                        pkl_dir,
+                        'botcode.pkl')
     if not os.path.exists(path):
         print("Error: '{}' does not exist.".format(path))
     elif os.path.isdir(path):
@@ -46,6 +49,8 @@ def scan_path(path, identify, train):
                         if identify:
                             print(features)
                             is_ai = predict(pkl_path, features)
+                            print('File:', path)
+                            print('AI:', is_ai)
                         elif train:
                             samples.append(sample)
                             if label:
@@ -64,6 +69,8 @@ def scan_path(path, identify, train):
                 if identify:
                     print(features)
                     is_ai = predict(pkl_path, features)
+                    print('File:', path)
+                    print('AI:', is_ai)
                 elif train:
                     samples.append(sample)
                     if label:
@@ -80,12 +87,6 @@ def scan_path(path, identify, train):
         print('Trained:')
         print(' - labels:', len(labels))
         print(' - samples:', len(samples))
-    elif identify:
-        print('File:', path)
-        print('AI:', is_ai)
-    else:
-        print("Error: you must specify either \
-        --identify or --train.")
 
 
 def main():

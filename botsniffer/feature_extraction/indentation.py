@@ -8,6 +8,9 @@ def calculate_indentation_consistency(parsed_code, indentation_size=4):
     indentation_levels = []
     # Traverse the AST and collect the indentation levels of all nodes
     for node in ast.walk(parsed_code):
+        if isinstance(node, ast.TypeIgnore):
+            # Exclude TypeIgnore nodes from the indentation consistency calculation
+            continue
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
             # Exclude function and class definitions
             # from the indentation consistency calculation
@@ -27,4 +30,7 @@ def calculate_indentation_consistency(parsed_code, indentation_size=4):
         return 1.0
     else:
         mad = np.median(np.abs(indentation_levels - np.median(indentation_levels)))
-        return 1.0 - (mad / (np.median(indentation_levels) * 2))
+        if (np.median(indentation_levels) <= 0):
+            return 1.0
+        else:
+            return 1.0 - (mad / (np.median(indentation_levels) * 2))

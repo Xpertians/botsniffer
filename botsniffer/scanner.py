@@ -57,9 +57,6 @@ def scan_path(path, identify, train):
                                 labels.append(1)
                             else:
                                 labels.append(0)
-                        else:
-                            print("Error: you must specify \
-                            either --identify or --train.")
     else:
         if path.endswith(".py"):
             # Run the feature extraction in a single file
@@ -77,9 +74,6 @@ def scan_path(path, identify, train):
                         labels.append(1)
                     else:
                         labels.append(0)
-                else:
-                    print("Error: you must specify either \
-                    --identify or --train.")
         else:
             print("Error: '{}' is not a Python source code file.".format(path))
     if train:
@@ -87,6 +81,11 @@ def scan_path(path, identify, train):
         print('Trained:')
         print(' - labels:', len(labels))
         print(' - samples:', len(samples))
+    elif identify:
+        print('Done!')
+    else:
+        print("Error: you must specify either \
+        --identify or --train.")
 
 
 def main():

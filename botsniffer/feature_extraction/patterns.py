@@ -10,7 +10,9 @@ def detect_repetitive_patterns(parsed_code):
             # Ignore nodes without line and column information (e.g., module)
             node_pattern = get_node_pattern(node)
             pattern_counts[node_pattern] += 1
-    repetitive_patterns = [pattern for pattern, count in pattern_counts.items() if count > 1]
+    repetitive_patterns = [
+        pattern for pattern, count in pattern_counts.items() if count > 1
+    ]
     total_patterns = len(repetitive_patterns)
     num_nodes = sum(1 for _ in ast.walk(parsed_code))
     if num_nodes == 0:
@@ -33,9 +35,9 @@ def get_node_pattern(node):
         # For variable names, return the name
         return node.id
     elif isinstance(node, ast.Attribute):
-        # For attributes, recursively get the pattern of the value and concatenate the attribute name
+        # For attributes, recursively get the pattern of the value
+        # and concatenate the attribute name
         return f"{get_node_pattern(node.value)}.{node.attr}"
     else:
         # For other node types, return the class name
         return node.__class__.__name__
-

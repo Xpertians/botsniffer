@@ -13,7 +13,7 @@ setup(
         'botsniffer.feature_extraction',
         'botsniffer.ml_model'],
     entry_points={"console_scripts": ["botsniffer=botsniffer.scanner:main"]},
-    install_requires=["sklearn", "numpy", "pandas"],
+    install_requires=["sklearn", "numpy", "pandas", "radon"],
     url='https://opensourcelicensecompliance.com',
     package_data={
         "botsniffer.data": ["*.txt", "*.ini", "*.sig"],

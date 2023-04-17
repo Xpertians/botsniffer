@@ -8,3 +8,4 @@ pip3 install dist/botsniffer*.whl >> install-pip.log
 botsniffer ./ --train
 botsniffer ./botsniffer/scanner.py --identify
 botsniffer ./aicode/ai_tree.py --identify
+botsniffer ./sample.py --identify

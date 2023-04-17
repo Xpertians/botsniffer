@@ -6,6 +6,7 @@ Some ideas and inspirations where taken from:
 
 ''' Cyclomatic Complexity: '''
 
+* https://radon.readthedocs.io/en/latest/intro.html#cyclomatic-complexity
 * https://stackoverflow.com/questions/911637/what-is-cyclomatic-complexity
 * https://www.asapdevelopers.com/python-code-complexity/
 * https://towardsdatascience.com/simplify-your-python-code-automating-code-complexity-analysis-with-wily-5c1e90c9a485

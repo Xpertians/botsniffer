@@ -14,6 +14,7 @@ I included some AI generated snippets, but you need to incorporate a bigger data
 $ pip3 install botsniffer
 $ botsniffer ./ --train (will train using the code in the current directory. Any files with "ai" in the name will be taken as AI generated).
 $ botsniffer ./ --identify (will list feature extraction scores plus AI as True/False)
+```
 
 ## Notice
 
